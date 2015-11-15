@@ -3,8 +3,10 @@
  */
 package simulate;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
+import CipherTools.CipherTool;
 import network.Network;
 import network.Node;
 import network.Packet;
@@ -19,8 +21,9 @@ public class Test {
      * @param args
      * we suppose that the graph is connected
      */
+
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         // TODO Auto-generated method stub
         int[][] nodeMap = {{1,2},{0,3},{2,3},{4,5},{5,2},{3,4},{4,0},{0,2}};
         Network network = new Network(nodeMap);
@@ -90,6 +93,64 @@ public class Test {
         test15(network,packetWithContentSameDest);
         System.out.println(" \n****** test15bis different destination *****\n");
         test15(network,packetWithContent);
+        String plaintext = "Eduardo's mother"; /*Note null padding*/
+
+        try {
+
+            BigInteger bi1 = new BigInteger("1234567890543218");
+            BigInteger bi2 = new BigInteger("1234567890543217");
+            System.out.println(bi1);
+            System.out.println(bi2);
+            String bi1str = bi1.toString();
+            String bi2str = bi2.toString();
+
+            CipherTool ct = new CipherTool(bi1str,bi2str);
+
+            System.out.println("==Java==");
+            System.out.println("plain:   " + plaintext);
+
+            byte[] cipher = ct.encrypt(plaintext);
+
+            System.out.print("cipher:  ");
+            for (int i=0; i<cipher.length; i++)
+              System.out.print(new Integer(cipher[i])+" ");
+            System.out.println("");
+
+            String decrypted = ct.decrypt(cipher);
+
+            System.out.println("decrypt: " + decrypted);
+
+          } catch (Exception e) {
+            e.printStackTrace();
+          }        
+        try{
+            String testText2 = "Hello world";
+            Node testNode = new Node(network,6);
+            testNode.genereateKey();
+            BigInteger testKey = testNode.getKey();
+            System.out.println(testKey);
+            network.getNode(0).genereateKey();
+            BigInteger testKey2 = network.getNode(0).getKey();
+            System.out.println(testKey2);
+            CipherTool ct2 = new CipherTool(testKey,testKey2);
+    
+            System.out.println("==Java==");
+            System.out.println("plain:   " + testText2);
+    
+            byte[] cipher = ct2.encrypt(testText2);
+    
+            System.out.print("cipher:  ");
+            for (int i=0; i<cipher.length; i++)
+              System.out.print(new Integer(cipher[i])+" ");
+            System.out.println("");
+    
+            String decrypted = ct2.decrypt(cipher);
+    
+            System.out.println("decrypt: " + decrypted);
+        } catch (Exception e) {
+            e.printStackTrace();
+          }  
+        
     }
     
     public static void test1(Network network,Packet packet){

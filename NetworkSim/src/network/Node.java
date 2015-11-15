@@ -3,7 +3,9 @@
  */
 package network;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 
 public class Node {
     private int address;
-    private int key;
+    private BigInteger key;
     private String name;
     private ArrayList<Node> connectedNodes;
     private Network network;
@@ -26,7 +28,7 @@ public class Node {
         // TODO Auto-generated constructor stub
         this.network = network;
         this.address=address;
-        this.key=address;
+        this.key = null;
         connectedNodes = new ArrayList<Node>();
     }
     
@@ -321,11 +323,17 @@ public class Node {
         this.address = address;
     }
 
-    public int getKey() {
+    public BigInteger getKey() {
         return key;
     }
 
-    public void setKey(int key) {
+    public void setKey(BigInteger key) {
+        this.key = key;
+    }
+    
+    public void genereateKey() {
+        Random rnd = new Random();
+        BigInteger key = new BigInteger(53,1000,rnd);
         this.key = key;
     }
 
