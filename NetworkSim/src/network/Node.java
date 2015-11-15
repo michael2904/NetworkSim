@@ -20,6 +20,12 @@ public class Node {
     private ArrayList<Node> connectedNodes;
     private Network network;
     private Node pathParent;
+    private String label = "";
+    private String country = "";
+    private double longitude = 0;
+    private double latitude = 0;
+    private int internal = 0;
+    private String type = "";
 
     /**
      * Nodes of the Network
@@ -31,7 +37,59 @@ public class Node {
         this.key = null;
         connectedNodes = new ArrayList<Node>();
     }
+    public Node() {
+    }
+
+    public Node(int address, String label, String country, double longitude, double latitude, int internal, String type) {
+        this.address = address;
+        this.label = label;
+        this.country = country;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.internal = internal;
+        this.type = type;
+    }
     
+    public void printNode() {
+        System.out.println("Address: " + address + "\nLabel: " + label + "\nCountry: " + country + "\nLongitude: " + longitude + "\nLatitude: " + latitude + "\nInternal: " + internal + "\nType: " + type + "\n");
+    }
+    
+    public String getLabel() {
+        return label;
+    }
+    public void setLabel(String label) {
+        this.label = label;
+    }
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public double getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+    public double getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+    public int getInternal() {
+        return internal;
+    }
+    public void setInternal(int internal) {
+        this.internal = internal;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
     public Network getNetwork() {
         return network;
     }
