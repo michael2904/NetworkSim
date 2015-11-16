@@ -5,6 +5,7 @@ package simulate;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import CipherTools.CipherTool;
 import network.Network;
@@ -25,8 +26,10 @@ public class Test {
     
     public static void main(String[] args) throws Exception{
         // TODO Auto-generated method stub
+        int[][] nodeMapArr = {{1,2},{0,3},{2,3},{4,5},{5,2},{3,4},{4,0},{0,2}};
+        ArrayList<int[]> nodeMap = convertArrToArrListInt(nodeMapArr);
         
-        int[][] nodeMap = {{1,2},{0,3},{2,3},{4,5},{5,2},{3,4},{4,0},{0,2}};
+        
         Network network = new Network(nodeMap);
         System.out.println(" ****** new NETWORK *****");
         Packet packet = new Packet(4,"test","test2");
@@ -34,7 +37,7 @@ public class Test {
         String packetContent = "3-//-false-//-Lets fuck eduardo's mom";
         Packet packetWithContent = new Packet(4,"",packetContent);
         Packet packetWithContentSameDest = new Packet(3,"",packetContent);
-/*
+
         test1(network,packet);
         test2(network,packet);
         test3(network,packet);
@@ -95,9 +98,9 @@ public class Test {
         test15(network,packetWithContentSameDest);
         System.out.println(" \n****** test15bis different destination *****\n");
         test15(network,packetWithContent);
-        */
+        
         String plaintext = "Eduardo's mother RRR"; /*Note null padding*/
-
+/*
         try {
 
             BigInteger bi1 = new BigInteger("1234567890543218");
@@ -215,7 +218,7 @@ public class Test {
         } catch (Exception e) {
             e.printStackTrace();
           }  
-        
+       */ 
     }
     
     public void printByteArr(byte[] arr){
@@ -347,6 +350,14 @@ public class Test {
         System.out.println(" \n****** test15 send Packet to Address finishing at the packet destination and Content but missing connection *****\n");
         network.getNode(1).sendPacketToAddressUsingContent(packet,4);
         System.out.println(" \n****** END test15 send Packet to Address finishing at the packet destination and Content but missing connection *****\n");
+    }
+    
+    public static ArrayList<int[]> convertArrToArrListInt (int[][] arr){
+        ArrayList<int[]> arrlist = new ArrayList<int[]>();
+        for(int[] arrInput : arr){
+            arrlist.add(arrInput);
+        }
+        return arrlist;
     }
     
 }

@@ -16,13 +16,12 @@ public class Network {
     /**
      * Network
      */
-    int[][] nodeMap = null;
-    ArrayList<Node> networkNodes;
+    private ArrayList<int[]> nodeMap = new ArrayList<int[]>();
+    private ArrayList<Node> networkNodes = new ArrayList<Node>();
     
-    public Network(int[][] nodeMap) {
+    public Network(ArrayList<int[]> nodeMap) {
         // TODO Auto-generated constructor stub
         this.nodeMap=nodeMap;
-        networkNodes = new ArrayList<Node>();
         Node newNodeSource = null;
         Node newNodeDestination = null;
         for(int[] pairs : nodeMap){
@@ -36,10 +35,14 @@ public class Network {
         }
 
     }
-    public int[][] getNodeMap() {
+    
+    public Network() {
+    }
+    
+    public ArrayList<int[]> getNodeMap() {
         return nodeMap;
     }
-    public void setNodeMap(int[][] nodeMap) {
+    public void setNodeMap(ArrayList<int[]> nodeMap) {
         this.nodeMap = nodeMap;
     }
     
@@ -127,6 +130,36 @@ public class Network {
         // no path found
         return null;
       }
+
+    public void addNode(Node newNode) {
+        // TODO Auto-generated method stub
+        networkNodes.add(newNode);
+        int newNodeAddress = newNode.getAddress();
+        for(Node conNode : newNode.getConnectedNodes()){
+            int conAddress = conNode.getAddress();
+            int[] edge = {newNodeAddress,conAddress};
+            nodeMap.add(edge);
+        }
+    }
+    
+    public void addEdge(int[] edge) {
+        // TODO Auto-generated method stub
+        if(edge.length == 2){
+            if (getNode(edge[0]).isConnectedToNode(edge[1]) && getNode(edge[1]).isConnectedToNode(edge[0])){
+                System.out.println("This edge is already made");
+            }else{
+                nodeMap.add(edge);
+                if(!getNode(edge[0]).isConnectedToNode(edge[1])){
+                    getNode(edge[0]).addConnectedNodes(getNode(edge[1]));
+                }
+                if(!getNode(edge[1]).isConnectedToNode(edge[0])){
+                    getNode(edge[1]).addConnectedNodes(getNode(edge[0]));
+                }
+            }
+        }else{
+            System.out.println("This edge is malformed");
+        }
+    }
 
 
 }
