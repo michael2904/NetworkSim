@@ -3,6 +3,8 @@
  */
 package network;
 
+import java.util.ArrayList;
+
 /**
  * @author michaelAM
  *
@@ -10,33 +12,37 @@ package network;
 public class Packet {
     private int destination;
     private Node source;
-    private String content;
-    private String realPacket;
+    private String data;
+    private ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
     /**
      * Packet of the Network
      */
-    public Packet(int destination,String content,String realPacket) {
+    public Packet(int destination,String data) {
         // TODO Auto-generated constructor stub
         this.destination = destination;
-        this.content = content;
-        this.realPacket = realPacket;
-    }
-    
-    public Packet(int destination,String realPacket) {
-        // TODO Auto-generated constructor stub
-        this.destination = destination;
-        this.realPacket = realPacket;
-        this.content = "";
-
+        this.data = data;
     }
     
     public Packet(int destination) {
         // TODO Auto-generated constructor stub
         this.destination = destination;
-        this.realPacket = "";
-        this.content = "";
-
-    }    
+        this.data = "";
+    }   
+    
+    public Packet(ArrayList<Integer> nodesOnPath,String dataToSend) {
+        // TODO Auto-generated constructor stub
+        this.nodesOnPath = nodesOnPath;
+        this.destination = nodesOnPath.get(0);
+        this.data="";
+        Integer add = 0;
+        for(int i=1;i<nodesOnPath.size();i++){
+            add = nodesOnPath.get(i);
+            this.data+="destination:"+add+"-//-data:";
+        }
+        this.data+=dataToSend;
+        System.out.println(data);     
+    }   
+    
     public int getDestination() {
         return destination;
     }
@@ -45,22 +51,13 @@ public class Packet {
     }
     
     
-    
-/*    RealPacket format:
-        <destination>-//-<type>-//-<content>   
-*/
-    public String getContent() {
-        return content;
+    public String getData() {
+        return data;
     }
-    public void setContent(String content) {
-        this.content = content;
+    public void setData(String data) {
+        this.data = data;
     }
-    public String getRealPacket() {
-        return realPacket;
-    }
-    public void setRealPacket(String realPacket) {
-        this.realPacket = realPacket;
-    }
+
     public Node getSource() {
         return source;
     }
@@ -69,7 +66,7 @@ public class Packet {
     }
     
     public void getPacketInfo() {
-        System.out.println("Packet Info : Destination : "+getDestination()+" Content : "+getContent()+" RealPacket : "+getRealPacket());
+        System.out.println("Packet Info : Destination : "+getDestination()+" data : "+getData());
     }
 
 }
