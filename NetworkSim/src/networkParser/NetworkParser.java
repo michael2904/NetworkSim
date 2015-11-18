@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import network.Edge;
 import network.Network;
 import network.Node;
 
@@ -70,7 +71,7 @@ public class NetworkParser {
                 network.addNode(graphNode);
             }
 
-            //Get edges
+          //Get edges
             JSONArray links = (JSONArray) jsonObject.get("links");
             for (int i = 0; i < links.size(); i++) {
                 JSONObject jsonEdge = (JSONObject) links.get(i);
@@ -91,6 +92,8 @@ public class NetworkParser {
                 } catch (Exception e) {
                 }
 
+                Edge graphEdge = new Edge(network,source, target);
+                network.addEdge(graphEdge);
             }
 
         } catch (Exception e) {

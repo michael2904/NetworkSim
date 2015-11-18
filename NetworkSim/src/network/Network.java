@@ -24,11 +24,15 @@ public class Network {
         this.nodeMap=nodeMap;
         Node newNodeSource = null;
         Node newNodeDestination = null;
+        Edge newEdge = null;
         for(int[] pairs : nodeMap){
             newNodeSource = getNode(pairs[0]);
             newNodeDestination = getNode(pairs[1]);
             newNodeSource.addConnectedNodes(newNodeDestination);
             newNodeDestination.addConnectedNodes(newNodeSource);
+            newEdge = new Edge(newNodeSource,newNodeDestination);
+            newNodeSource.addEdge(newEdge);
+            newNodeDestination.addEdge(newEdge);
         }
         for(Node node : networkNodes){
             node.getInfo();
@@ -159,6 +163,13 @@ public class Network {
         }else{
             System.out.println("This edge is malformed");
         }
+    }
+    
+    public void addEdge(Edge edge) {
+        // TODO Auto-generated method stub
+        edge.getSource().addEdge(edge);
+        edge.getTarget().addEdge(edge);
+        edge.setNetwork(this);
     }
 
 

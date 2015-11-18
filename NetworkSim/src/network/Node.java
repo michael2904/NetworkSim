@@ -17,7 +17,16 @@ public class Node {
     private int address;
     private BigInteger key;
     private String name;
-    private ArrayList<Node> connectedNodes;
+    private ArrayList<Node> connectedNodes = new ArrayList<Node>();
+    private ArrayList<Edge> edges = new ArrayList<Edge>();
+    
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+    public void setEdges(ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
     private Network network;
     private Node pathParent;
     private String label = "";
@@ -35,7 +44,6 @@ public class Node {
         this.network = network;
         this.address=address;
         this.key = null;
-        connectedNodes = new ArrayList<Node>();
     }
     public Node() {
     }
@@ -196,6 +204,19 @@ public class Node {
         this.connectedNodes.add(connectedNode);
     }
     
+    public void addEdge(Edge edge) {
+        this.edges.add(edge);
+    }
+    
+    public Edge getEdge(Node source, Node target){
+        for(Edge edge : edges){
+            if((edge.getSource() == source && edge.getTarget() == target) || (edge.getSource() == target && edge.getTarget() == source)){
+                return edge;
+            }
+        }
+        return null;
+    }
+    
     public boolean isConnectedToNode(int address){
         for(Node networkNode : connectedNodes){
             if(networkNode.getAddress() == address){
@@ -224,7 +245,11 @@ public class Node {
 
     public void getInfo() {
         // TODO Auto-generated method stub
-        System.out.println("INFO : "+address+ " connected node " + getConnectedNodesAddresses());
+        System.out.println("INFO Node : "+address+ " connected to nodes ");
+        for(Node node : getConnectedNodes()){
+            System.out.print("Node :"+node.getAddress()+" with edge : ");
+            getEdge(this, node).printEdge();
+        }
         
     }
     
