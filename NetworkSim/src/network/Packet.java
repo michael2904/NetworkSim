@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class Packet {
     private int destination;
-    private Node source;
     private String data;
     /**
      * Packet of the Network
@@ -53,13 +52,6 @@ public class Packet {
     }
     public void setData(String data) {
         this.data = data;
-    }
-
-    public Node getSource() {
-        return source;
-    }
-    public void setSource(Node source) {
-        this.source = source;
     }
     
     public void getPacketInfo() {
