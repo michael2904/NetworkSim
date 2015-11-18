@@ -39,14 +39,22 @@ public class Test {
         path.add(2);
         path.add(3);
         Packet packetNewContent = new Packet(path,"HELLo Bitches");
-        System.out.println(" ****** new Packet *****");
+        System.out.println(" ****** new Packet with valid Path *****");
         packetNewContent.getPacketInfo();
-        boolean found = network.getNode(4).sendPacket(packetNewContent,packetNewContent.getDestination());
-        System.out.println(found);
-        System.out.println(" ****** new Test *****");
-        Packet packetNewContent2 = new Packet(path,"HELLo Bitches");
-        boolean found2 = network.getNode(4).sendPacket(packetNewContent2);
-        System.out.println(found2);
+        System.out.println(" ****** sending Packet with valid Path*****");
+        boolean found = network.getNode(4).sendPacket(packetNewContent);
+        System.out.println(" ****** return Packet with valid Path ***** "+found+"\n\n");
+        
+        ArrayList<Integer> invalidpath = new ArrayList<Integer>();
+        invalidpath.add(0);
+        invalidpath.add(5);
+        invalidpath.add(2);
+        Packet packetInvalidPath = new Packet(invalidpath,"HELLo Bitches wrong path");
+        System.out.println(" ****** new Packet with invalid Path*****");
+        packetInvalidPath.getPacketInfo();
+        System.out.println(" ****** sending Packet with invalid Path*****");
+        boolean found2 = network.getNode(4).sendPacket(packetInvalidPath);
+        System.out.println(" ****** return Packet with invalid Path ***** "+found2);
     }
     
     public void printByteArr(byte[] arr){

@@ -13,7 +13,6 @@ public class Packet {
     private int destination;
     private Node source;
     private String data;
-    private ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
     /**
      * Packet of the Network
      */
@@ -31,7 +30,6 @@ public class Packet {
     
     public Packet(ArrayList<Integer> nodesOnPath,String dataToSend) {
         // TODO Auto-generated constructor stub
-        this.nodesOnPath = nodesOnPath;
         this.destination = nodesOnPath.get(0);
         this.data="";
         Integer add = 0;
@@ -40,7 +38,7 @@ public class Packet {
             this.data+="destination:"+add+"-//-data:";
         }
         this.data+=dataToSend;
-        System.out.println(data);     
+        System.out.println("This is the data in the packet :\n"+data+"\nEND");     
     }   
     
     public int getDestination() {
@@ -49,7 +47,6 @@ public class Packet {
     public void setDestination(int destination) {
         this.destination = destination;
     }
-    
     
     public String getData() {
         return data;

@@ -100,9 +100,8 @@ public class Node {
     
     private boolean receivePacket(Packet packet,int address){
         boolean found = false;
-        System.out.println("Node "+this.address+" receivePacketUsingContent with address///"+packet.getDestination() +"-/-"+ packet.getData()+"/// and address:"+address);
         if(address == this.address){
-            System.out.println("Packet Arrived with data : "+packet.getData());
+            System.out.println("Node "+this.getAddress()+": Packet received with data : "+packet.getData());
             String packetData =packet.getData();
             if(packetData.contains("-//-")){
                 String[] packetInfo = packet.getData().split("-//-data:");
@@ -110,11 +109,11 @@ public class Node {
                 String data = packet.getData().replace(packetInfo[0]+"-//-data:", "");
                 packet.setData(data);
                 packet.setDestination(newDestination);
-                System.out.println(data);
-                sendPacket(packet,newDestination);
+                found = sendPacket(packet,newDestination);
+            }else{
+                System.out.println("No more destinations. The data is :"+packet.getData());
+                found = true;
             }
-
-            found = true;
         }else{
             System.out.println("Node "+this.address+" is not the destination, looking for : "+address+" Wrong path");
         }
@@ -122,16 +121,14 @@ public class Node {
     }
             
     public boolean sendPacket(Packet packet,int address){
-        packet.setSource(this);
         boolean found = false;
-        System.out.println("Node "+this.address+" sendPacket "+packet.getDestination()+"-/-"+ packet.getData() +" with address "+address);
         if(packet.getDestination() == this.address){
             System.out.println("Packet is already here");
             found = true;
         }else{
             if(isConnectedToNode(address)){
                 if(address==packet.getDestination()){
-                    System.out.println("Sending packet to connected destination Node "+address);
+                    System.out.println("Node "+this.getAddress()+": sending packet to connected destination Node "+address);
                     found = getConnectedNode(address).receivePacket(packet,address);
                 }else{
                    System.out.println("The address "+address+" does not correspond to the destination of the packet "+packet.getDestination());
